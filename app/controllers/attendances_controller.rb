@@ -1,6 +1,7 @@
 class AttendancesController < ApplicationController
   before_action :set_attendance, only: [:show, :edit, :update, :destroy]
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
+  # before_action :require_admin, only: [:index, :show]
 
   def index
     @attendances = Attendance.all
@@ -57,5 +58,11 @@ class AttendancesController < ApplicationController
 
     def attendance_params
       params.require(:attendance).permit(:student_id, :date, :status)
+    end
+
+    def require_admin
+      unless current_user.admin?
+        redirect_to root_path, notice: 'You are not authorized to perform this action'
+      end
     end
 end
