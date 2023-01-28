@@ -1,17 +1,25 @@
-<p>
-  <strong>Student:</strong>
-  <%= @attendance.student.name %>
-</p>
-
-<p>
-  <strong>Date:</strong>
-  <%= @attendance.date %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @attendance.status %>
-</p>
+<table>
+  <thead>
+    <tr>
+      <th>Student Name</th>
+      <th>Attendance Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= form_for @attendance do |f| %>
+      <% @students.each do |student| %>
+        <tr>
+          <td><%= student.name %></td>
+          <td>
+            <%= f.radio_button :status, 'present', checked: true %> Present
+            <%= f.radio_button :status, 'absent' %> Absent
+            <%= f.radio_button :status, 'on leave' %> On Leave
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
 
 <%= link_to 'Edit', edit_attendance_path(@attendance) %> |
 <%= link_to 'Back', attendances_path %>

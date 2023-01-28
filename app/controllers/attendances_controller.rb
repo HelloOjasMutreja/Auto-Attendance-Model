@@ -1,6 +1,7 @@
 class AttendancesController < ApplicationController
   before_action :set_attendance, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  # before_action :require_teacher, only: [:show, :edit, :update, :destroy]
   # before_action :require_admin, only: [:index, :show]
 
   def index
@@ -8,6 +9,12 @@ class AttendancesController < ApplicationController
   end
 
   def show
+    @attendance = Attendance.find(params[:id])
+    if @attendance.class_section
+      @students = @attendance.class_section.students
+    else
+      redirect_to attendances_path, notice: "class_section not exist in this attendance"
+    end
   end
 
   def new
@@ -58,6 +65,12 @@ class AttendancesController < ApplicationController
 
     def attendance_params
       params.require(:attendance).permit(:student_id, :date, :status)
+    end
+
+    def require_teacher
+      unless current_user.teacher? && current_user.class_section == attendance.class_section
+        redirect_to root_path, notice: 'You are not authorized to perform this action'
+      end
     end
 
     def require_admin

@@ -27,6 +27,10 @@
   </div>
 
   <div>
+    <%= f.select :class_section_id, ClassSection.all.map { |c| [c.name, c.id] }, { prompt: "Select Class" } %>
+  </div>
+
+  <div>
     <%= form.submit %>
   </div>
 <% end %>

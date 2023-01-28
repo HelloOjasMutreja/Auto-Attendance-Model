@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  belongs_to :class_section
   validates :first_name, presence: true, length: { minimum: 2 }
 
   enum role: [:admin, :teacher]

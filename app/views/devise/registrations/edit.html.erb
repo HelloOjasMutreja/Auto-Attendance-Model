@@ -14,6 +14,10 @@
   </div>
 
   <div class="field">
+    <%= f.select :class_section_id, ClassSection.all.map { |c| [c.name, c.id] }, { prompt: "Select Class" } %>
+  </div>
+
+  <div class="field">
       <label>Gender</label>
       <div>
           <%= f.radio_button :gender, 'Madam', checked: true %> Madam

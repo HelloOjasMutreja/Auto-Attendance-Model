@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Class sections</h1>
+
+<div id="class_sections">
+  <% @class_sections.each do |class_section| %>
+    <%= render class_section %>
+    <p>
+      <%= link_to "Show this class section", class_section %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New class section", new_class_section_path %>
